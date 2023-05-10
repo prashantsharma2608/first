@@ -59,3 +59,52 @@ def run_session():
 # The Thread function takes run_session function and each set of capability from the caps array as an argument to run each session in parallel
 for cap in caps:
     Thread(target=run_session, args=(cap,)).start()
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('test'){
+            steps{
+                git branch: 'main', url: 'https://github.com/prashantsharma2608/first.git'
+            }
+        }
+        stage('Test'){
+            steps{
+                echo 'the job has been tested'
+            }
+        }
+    }
+}
+node {
+    withEnv(["LT_USERNAME=prashantsharma",
+    "LT_ACCESS_KEY=qvitkAIKuMTkUYduwzBszg7OGoCl729DEDQY7NcVf33MhG5rG3",]){
+
+   stage('setup') {
+
+    try{
+      git 'https://github.com/prashantsharma2608/first.git'
+    }
+    catch (err){
+      echo err
+   }
+
+   }
+   stage('build') {
+      sh 'npm install'
+    }
+
+   stage('test') {
+          try{
+          sh './node_modules/.bin/nightwatch -e chrome,edge tests'
+          }
+          catch (err){
+          echo err
+          }
+   }
+   stage('end') {
+     echo "Success"
+     }
+ }
+}
