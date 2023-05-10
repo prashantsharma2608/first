@@ -2,20 +2,21 @@ from selenium import webdriver
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+import pytest
 # nOt0r5Le5LhYZjrmZ6DpW4QvvXBXTCyG670NB1H02zr1ik9Zwh
 username = "prashantsharma"
-accessToken = "nOt0r5Le5LhYZjrmZ6DpW4QvvXBXTCyG670NB1H02zr1ik9Zwh"
+accessToken = "qvitkAIKuMTkUYduwzBszg7OGoCl729DEDQY7NcVf33MhG5rG3"
 gridUrl = "hub.lambdatest.com/wd/hub"
 
 options = ChromeOptions()
 options.browser_version = "112.0"
 options.platform_name = "Windows 11"
 lt_options = {}
-# lt_options["username"] = "prashantsharma"
-# lt_options["accessKey"] = "nOt0r5Le5LhYZjrmZ6DpW4QvvXBXTCyG670NB1H02zr1ik9Zwh"
+lt_options["username"] = "prashantsharma"
+lt_options["accessKey"] = "nOt0r5Le5LhYZjrmZ6DpW4QvvXBXTCyG670NB1H02zr1ik9Zwh"
 lt_options["project"] = "selenium test"
 lt_options["name"] = "selenium"
-lt_options["build"] = "prashant"
+lt_options["build"] = "p"
 lt_options["network"] = True
 lt_options["networkThrottling"] = "Regular 3G"
 lt_options["w3c"] = True
@@ -26,9 +27,9 @@ options.set_capability('LT:Options', lt_options)
 url = "https://"+username+":"+accessToken+"@"+gridUrl
 
 driver = webdriver.Remote(
-    command_executor=url,
-    options=options
-)
+        command_executor=url,
+        options=options
+    )
 
 Username = "prashantsharma@lambdatest.com"
 pd = "aARUSH@123"
@@ -44,7 +45,7 @@ password.send_keys(pd)
 driver.find_element("id", "login-button").click()
 time.sleep(1)
 
-drp = driver.find_element("id", "profile__dropdown__parent")
+drp = driver.find_element(By.XPATH, "//*[@id=profile__dropdown]")
 drp.click()
 org = driver.find_element("id", "item__manage__team")
 org.click()
@@ -62,4 +63,5 @@ sub.click()
 time.sleep(1)
 # //*[@id="profile__dropdown"]
 # //*[@id="app"]/section/div/div/div[2]/div[2]/div[1]/div[2]/div/div
+# driver.quit()
 driver.quit()
